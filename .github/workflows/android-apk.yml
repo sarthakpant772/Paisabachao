@@ -21,6 +21,9 @@ jobs:
           gradle-version: '8.9'
       - name: Build debug APK
         run: gradle --no-daemon :app:assembleDebug
+      - name: Print Android debug signing SHA-1
+        if: success()
+        run: keytool -list -v -keystore "$HOME/.android/debug.keystore" -alias androiddebugkey -storepass android -keypass android | grep 'SHA1:'
       - uses: actions/upload-artifact@v4
         with:
           name: Paisabachao-debug-apk
